@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const db = require('./models/db');
+const autoresRoutes = require('./routes/autores.routes');
 
 const app = express();
 const PORT = 3000;
@@ -8,6 +9,9 @@ const PORT = 3000;
 // Middlewares
 app.use(cors());
 app.use(express.json());
+
+// Rutas
+app.use('/api/autores', autoresRoutes);
 
 // Ruta de prueba
 app.get('/', (req, res) => {
