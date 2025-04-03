@@ -37,6 +37,41 @@ document.getElementById('formAutor').addEventListener('submit', function (e) {
       });
   });   
   });
+
+  document.getElementById('formLibro').addEventListener('submit', function (e) {
+    e.preventDefault();
+  
+    const id = document.getElementById('libroId').value;
+    const titulo = document.getElementById('titulo').value;
+    const genero = document.getElementById('genero').value;
+    const anio_publicacion = parseInt(document.getElementById('anio_publicacion').value);
+    const autor_id = parseInt(document.getElementById('autor_id').value);
+  
+    const datos = {
+      titulo,
+      genero,
+      anio_publicacion,
+      autor_id
+    };
+  
+    const metodo = id ? 'PUT' : 'POST';
+    const url = id
+      ? `http://localhost:3000/api/libros/${id}`
+      : 'http://localhost:3000/api/libros';
+  
+    fetch(url, {
+      method: metodo,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datos),
+    })
+      .then(res => res.json())
+      .then(() => {
+        this.reset();
+        document.getElementById('libroId').value = '';
+        cargarLibros();
+      });
+  });
+  
   
   // Función para cargar todos los autores
   function cargarAutores() {
@@ -115,6 +150,26 @@ document.getElementById('formAutor').addEventListener('submit', function (e) {
           `;
           tbody.appendChild(fila);
         });
+      });
+  }
+  
+  function editarLibro(id, titulo, genero, anio_publicacion, autor_id) {
+    document.getElementById('libroId').value = id;
+    document.getElementById('titulo').value = titulo;
+    document.getElementById('genero').value = genero;
+    document.getElementById('anio_publicacion').value = anio_publicacion;
+    document.getElementById('autor_id').value = autor_id;
+  }
+  
+  function eliminarLibro(id) {
+    if (!confirm('¿Estás segura de que quieres eliminar este libro?')) return;
+  
+    fetch(`http://localhost:3000/api/libros/${id}`, {
+      method: 'DELETE',
+    })
+      .then(res => res.json())
+      .then(() => {
+        cargarLibros();
       });
   }
   
