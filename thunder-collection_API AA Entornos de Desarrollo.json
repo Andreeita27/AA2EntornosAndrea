@@ -1,0 +1,62 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "API AA Entornos de Desarrollo",
+    "collectionId": "c6d4f995-4008-42bb-8c7b-1817391469c7",
+    "dateExported": "2025-04-03T15:31:34.063Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "4ff8ca4d-e0a5-405b-88ca-a49d245276cc",
+            "colId": "c6d4f995-4008-42bb-8c7b-1817391469c7",
+            "containerId": "",
+            "name": "Añado libro",
+            "url": "http://localhost:3000/api/libros",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2025-04-03T15:30:23.844Z",
+            "modified": "2025-04-03T15:30:23.844Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n  \"titulo\": \"El Ciclo de la Luna Roja\",\r\n  \"genero\": \"Fantasía\",\r\n  \"anio_publicacion\": 2009,\r\n  \"autor_id\": 3\r\n}\r\n\r\n",
+                "form": []
+            }
+        },
+        {
+            "_id": "3a76671c-0384-46d1-9e8c-7ca72987ee71",
+            "colId": "c6d4f995-4008-42bb-8c7b-1817391469c7",
+            "containerId": "",
+            "name": "Añado libro 2",
+            "url": "http://localhost:3000/api/libros",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2025-04-03T15:30:41.079Z",
+            "modified": "2025-04-03T15:30:41.079Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n  \"titulo\": \"Memorias de Idhún\",\r\n  \"genero\": \"Fantasía\",\r\n  \"anio_publicacion\": 2004,\r\n  \"autor_id\": 1\r\n}\r\n",
+                "form": []
+            }
+        },
+        {
+            "_id": "1e74f361-5c8d-4d96-83fb-fc1bfbd7413f",
+            "colId": "c6d4f995-4008-42bb-8c7b-1817391469c7",
+            "containerId": "",
+            "name": "Añado autor",
+            "url": "http://localhost:3000/api/autores",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2025-04-03T15:31:00.505Z",
+            "modified": "2025-04-03T15:31:00.505Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n  \"nombre\": \"Laura Gallego\",\r\n  \"nacionalidad\": \"España\",\r\n  \"fecha_nacimiento\": \"1977-10-11\"\r\n}\r\n",
+                "form": []
+            }
+        }
+    ],
+    "ref": "BP4z-_g5h7W5V7vuMgguChWCgzUlHa76hc53XmYLeU9ipXLqdVuIGb2grLAWlGOemjZFCDWqsbR99RIr7i__Zg"
+}
