@@ -1,3 +1,4 @@
+const { validationResult } = require('express-validator');
 const db = require('../models/db');
 
 // Obtener todos los libros
@@ -33,6 +34,11 @@ exports.obtenerLibroPorId = (req, res) => {
 
 // Crear nuevo libro
 exports.crearLibro = (req, res) => {
+  const errores = validationResult(req); 
+  if (!errores.isEmpty()) {
+    return res.status(400).json({ errores: errores.array() });
+  }
+
   const { titulo, genero, anio_publicacion, autor_id } = req.body;
   db.run(
     `INSERT INTO libros (titulo, genero, anio_publicacion, autor_id) 
@@ -47,6 +53,11 @@ exports.crearLibro = (req, res) => {
 
 // Actualizar libro
 exports.actualizarLibro = (req, res) => {
+  const errores = validationResult(req); 
+  if (!errores.isEmpty()) {
+    return res.status(400).json({ errores: errores.array() });
+  }
+
   const { id } = req.params;
   const { titulo, genero, anio_publicacion, autor_id } = req.body;
   db.run(
