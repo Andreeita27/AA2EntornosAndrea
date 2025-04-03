@@ -1,6 +1,7 @@
 // Cargar autores al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
     cargarAutores();
+    cargarLibros();
     // Capturar el envío del formulario de autores
 document.getElementById('formAutor').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -92,3 +93,28 @@ document.getElementById('formAutor').addEventListener('submit', function (e) {
         cargarAutores();
       });
   }
+
+  function cargarLibros() {
+    fetch('http://localhost:3000/api/libros')
+      .then(res => res.json())
+      .then(libros => {
+        const tbody = document.querySelector('#tablaLibros tbody');
+        tbody.innerHTML = '';
+  
+        libros.forEach(libro => {
+          const fila = document.createElement('tr');
+          fila.innerHTML = `
+            <td>${libro.titulo}</td>
+            <td>${libro.genero}</td>
+            <td>${libro.anio_publicacion}</td>
+            <td>${libro.autor_nombre || 'Desconocido'}</td>
+            <td>
+              <button class="btn btn-sm btn-warning" onclick='editarLibro(${libro.id}, ${JSON.stringify(libro.titulo)}, ${JSON.stringify(libro.genero)}, ${libro.anio_publicacion}, ${libro.autor_id})'>Editar</button>
+              <button class="btn btn-sm btn-danger" onclick="eliminarLibro(${libro.id})">Eliminar</button>
+            </td>
+          `;
+          tbody.appendChild(fila);
+        });
+      });
+  }
+  
