@@ -1,3 +1,4 @@
+const { validationResult } = require('express-validator');
 const db = require('../models/db');
 
 // Obtener todos los autores
@@ -20,6 +21,11 @@ exports.obtenerAutorPorId = (req, res) => {
 
 // Crear nuevo autor
 exports.crearAutor = (req, res) => {
+  const errores = validationResult(req);
+  if (!errores.isEmpty()) {
+    return res.status(400).json({ errores: errores.array() });
+  }
+
   const { nombre, nacionalidad, fecha_nacimiento } = req.body;
   db.run(
     'INSERT INTO autores (nombre, nacionalidad, fecha_nacimiento) VALUES (?, ?, ?)',
@@ -33,6 +39,11 @@ exports.crearAutor = (req, res) => {
 
 // Actualizar autor
 exports.actualizarAutor = (req, res) => {
+  const errores = validationResult(req);
+  if (!errores.isEmpty()) {
+    return res.status(400).json({ errores: errores.array() });
+  }
+
   const { id } = req.params;
   const { nombre, nacionalidad, fecha_nacimiento } = req.body;
   db.run(
