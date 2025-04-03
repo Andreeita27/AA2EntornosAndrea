@@ -10,7 +10,7 @@ document.getElementById('formAutor').addEventListener('submit', function (e) {
     const nombre = document.getElementById('nombre').value;
     const nacionalidad = document.getElementById('nacionalidad').value;
     const fecha_nacimiento = document.getElementById('fecha_nacimiento').value;
-  
+
     const datos = {
       nombre,
       nacionalidad,
