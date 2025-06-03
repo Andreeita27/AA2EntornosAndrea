@@ -1,39 +1,49 @@
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+const mysql = require('mysql2/promise');
 
-// Ruta absoluta al archivo de base de datos
-const dbPath = path.resolve(__dirname, '../../database.sqlite');
+const dbConfig = {
+  host: 'localhost',
+  user: 'AFERNANDEZ',
+  password: '26011998',
+  database: 'libreria',
+  port: 3306
+};
 
-// Crear conexión
-const db = new sqlite3.Database(dbPath, (err) => {
-  if (err) {
-    console.error('Error al conectar con la base de datos', err.message);
-  } else {
-    console.log('Conectado a la base de datos SQLite');
+const pool = mysql.createPool(dbConfig);
+
+const initializeDatabase = async () => {
+  try {
+    const connection = await pool.getConnection();
+    
+    console.log('Conectado a base de datos');
+    
+    await connection.execute(`
+      CREATE TABLE IF NOT EXISTS autores (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nombre VARCHAR(255) NOT NULL,
+        nacionalidad VARCHAR(255) NOT NULL,
+        fecha_nacimiento DATE NOT NULL
+      )
+    `);
+    
+    await connection.execute(`
+      CREATE TABLE IF NOT EXISTS libros (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        titulo VARCHAR(255) NOT NULL,
+        genero VARCHAR(255) NOT NULL,
+        anio_publicacion INT NOT NULL,
+        autor_id INT,
+        FOREIGN KEY (autor_id) REFERENCES autores(id) ON DELETE CASCADE
+      )
+    `);
+    
+    console.log('Tablas creadas correctamente');
+    connection.release();
+    
+  } catch (error) {
+    console.error('Error al inicializar la base de datos:', error.message);
   }
-});
+};
 
-// Crear tablas si no existen
-db.serialize(() => {
-  db.run(`
-    CREATE TABLE IF NOT EXISTS autores (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      nombre TEXT NOT NULL,
-      nacionalidad TEXT NOT NULL,
-      fecha_nacimiento TEXT NOT NULL
-    )
-  `);
+initializeDatabase();
 
-  db.run(`
-    CREATE TABLE IF NOT EXISTS libros (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      titulo TEXT NOT NULL,
-      genero TEXT NOT NULL,
-      anio_publicacion INTEGER NOT NULL,
-      autor_id INTEGER,
-      FOREIGN KEY (autor_id) REFERENCES autores(id)
-    )
-  `);
-});
-
-module.exports = db;
+module.exports = pool;

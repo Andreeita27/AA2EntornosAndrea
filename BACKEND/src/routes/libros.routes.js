@@ -3,7 +3,6 @@ const { body } = require('express-validator');
 const router = express.Router();
 const librosController = require('../controllers/libros.controller');
 
-// Validaciones
 const validarLibro = [
   body('titulo').notEmpty().withMessage('El título es obligatorio'),
   body('genero').notEmpty().withMessage('El género es obligatorio'),
@@ -13,12 +12,10 @@ const validarLibro = [
     .isInt({ min: 1 }).withMessage('Debe seleccionar un autor válido'),
 ];
 
-// Rutas CRUD
-router.get('/', librosController.obtenerLibros);
-router.get('/:id', librosController.obtenerLibroPorId);
-router.post('/', validarLibro, librosController.crearLibro);
-router.put('/:id', validarLibro, librosController.actualizarLibro); 
-router.delete('/:id', librosController.eliminarLibro);
+router.get('/', librosController.getAllLibros);
+router.get('/:id', librosController.getLibroById);
+router.post('/', validarLibro, librosController.createLibro);
+router.put('/:id', validarLibro, librosController.updateLibro); 
+router.delete('/:id', librosController.deleteLibro);
 
 module.exports = router;
-

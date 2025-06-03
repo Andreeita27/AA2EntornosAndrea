@@ -1,85 +1,57 @@
-const { validationResult } = require('express-validator');
-const db = require('../models/db');
+const librosService = require('../services/libros.service');
 
-// Obtener todos los libros
-exports.obtenerLibros = (req, res) => {
-  db.all(
-    `SELECT libros.*, autores.nombre AS autor_nombre 
-     FROM libros 
-     LEFT JOIN autores ON libros.autor_id = autores.id`,
-    [],
-    (err, rows) => {
-      if (err) return res.status(500).json({ error: err.message });
-      res.json(rows);
+const getAllLibros = async (req, res) => {
+    try {
+        const libros = await librosService.getAllLibros();
+        res.json(libros);
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al obtener los libros', error });
     }
-  );
 };
 
-// Obtener un libro por ID
-exports.obtenerLibroPorId = (req, res) => {
-  const { id } = req.params;
-  db.get(
-    `SELECT libros.*, autores.nombre AS autor_nombre 
-     FROM libros 
-     LEFT JOIN autores ON libros.autor_id = autores.id 
-     WHERE libros.id = ?`,
-    [id],
-    (err, row) => {
-      if (err) return res.status(500).json({ error: err.message });
-      if (!row) return res.status(404).json({ error: 'Libro no encontrado' });
-      res.json(row);
+const getLibroById = async (req, res) => {
+    try {
+        const libro = await librosService.getLibroById(req.params.id);
+        if (!libro) {
+            return res.status(404).json({ mensaje: 'Libro no encontrado' });
+        }
+        res.json(libro);
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al obtener el libro', error });
     }
-  );
 };
 
-// Crear nuevo libro
-exports.crearLibro = (req, res) => {
-  const errores = validationResult(req); 
-  if (!errores.isEmpty()) {
-    return res.status(400).json({ errores: errores.array() });
-  }
-
-  const { titulo, genero, anio_publicacion, autor_id } = req.body;
-  db.run(
-    `INSERT INTO libros (titulo, genero, anio_publicacion, autor_id) 
-     VALUES (?, ?, ?, ?)`,
-    [titulo, genero, anio_publicacion, autor_id],
-    function (err) {
-      if (err) return res.status(500).json({ error: err.message });
-      res.status(201).json({ id: this.lastID });
+const createLibro = async (req, res) => {
+    try {
+        const nuevoLibro = await librosService.createLibro(req.body);
+        res.status(201).json(nuevoLibro);
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al crear el libro', error });
     }
-  );
 };
 
-// Actualizar libro
-exports.actualizarLibro = (req, res) => {
-  const errores = validationResult(req); 
-  if (!errores.isEmpty()) {
-    return res.status(400).json({ errores: errores.array() });
-  }
-
-  const { id } = req.params;
-  const { titulo, genero, anio_publicacion, autor_id } = req.body;
-  db.run(
-    `UPDATE libros SET titulo = ?, genero = ?, anio_publicacion = ?, autor_id = ? 
-     WHERE id = ?`,
-    [titulo, genero, anio_publicacion, autor_id, id],
-    function (err) {
-      if (err) return res.status(500).json({ error: err.message });
-      if (this.changes === 0)
-        return res.status(404).json({ error: 'Libro no encontrado' });
-      res.json({ mensaje: 'Libro actualizado correctamente' });
+const updateLibro = async (req, res) => {
+    try {
+        await librosService.updateLibro(req.params.id, req.body);
+        res.json({ mensaje: 'Libro actualizado correctamente' });
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al actualizar el libro', error });
     }
-  );
 };
 
-// Eliminar libro
-exports.eliminarLibro = (req, res) => {
-  const { id } = req.params;
-  db.run('DELETE FROM libros WHERE id = ?', [id], function (err) {
-    if (err) return res.status(500).json({ error: err.message });
-    if (this.changes === 0)
-      return res.status(404).json({ error: 'Libro no encontrado' });
-    res.json({ mensaje: 'Libro eliminado correctamente' });
-  });
+const deleteLibro = async (req, res) => {
+    try {
+        await librosService.deleteLibro(req.params.id);
+        res.json({ mensaje: 'Libro eliminado correctamente' });
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al eliminar el libro', error });
+    }
+};
+
+module.exports = {
+    getAllLibros,
+    getLibroById,
+    createLibro,
+    updateLibro,
+    deleteLibro
 };

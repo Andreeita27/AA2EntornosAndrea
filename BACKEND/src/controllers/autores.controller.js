@@ -1,70 +1,57 @@
-const { validationResult } = require('express-validator');
-const db = require('../models/db');
+const autoresService = require('../services/autores.service');
 
-// Obtener todos los autores
-exports.obtenerAutores = (req, res) => {
-  db.all('SELECT * FROM autores', [], (err, rows) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(rows);
-  });
-};
-
-// Obtener autor por ID
-exports.obtenerAutorPorId = (req, res) => {
-  const { id } = req.params;
-  db.get('SELECT * FROM autores WHERE id = ?', [id], (err, row) => {
-    if (err) return res.status(500).json({ error: err.message });
-    if (!row) return res.status(404).json({ error: 'Autor no encontrado' });
-    res.json(row);
-  });
-};
-
-// Crear nuevo autor
-exports.crearAutor = (req, res) => {
-  const errores = validationResult(req);
-  if (!errores.isEmpty()) {
-    return res.status(400).json({ errores: errores.array() });
-  }
-
-  const { nombre, nacionalidad, fecha_nacimiento } = req.body;
-  db.run(
-    'INSERT INTO autores (nombre, nacionalidad, fecha_nacimiento) VALUES (?, ?, ?)',
-    [nombre, nacionalidad, fecha_nacimiento],
-    function (err) {
-      if (err) return res.status(500).json({ error: err.message });
-      res.status(201).json({ id: this.lastID });
+const getAllAutores = async (req, res) => {
+    try {
+        const autores = await autoresService.getAllAutores();
+        res.json(autores);
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al obtener los autores', error });
     }
-  );
 };
 
-// Actualizar autor
-exports.actualizarAutor = (req, res) => {
-  const errores = validationResult(req);
-  if (!errores.isEmpty()) {
-    return res.status(400).json({ errores: errores.array() });
-  }
-
-  const { id } = req.params;
-  const { nombre, nacionalidad, fecha_nacimiento } = req.body;
-  db.run(
-    'UPDATE autores SET nombre = ?, nacionalidad = ?, fecha_nacimiento = ? WHERE id = ?',
-    [nombre, nacionalidad, fecha_nacimiento, id],
-    function (err) {
-      if (err) return res.status(500).json({ error: err.message });
-      if (this.changes === 0)
-        return res.status(404).json({ error: 'Autor no encontrado' });
-      res.json({ mensaje: 'Autor actualizado correctamente' });
+const getAutorById = async (req, res) => {
+    try {
+        const autor = await autoresService.getAutorById(req.params.id);
+        if (!autor) {
+            return res.status(404).json({ mensaje: 'Autor no encontrado' });
+        }
+        res.json(autor);
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al obtener el autor', error });
     }
-  );
 };
 
-// Eliminar autor
-exports.eliminarAutor = (req, res) => {
-  const { id } = req.params;
-  db.run('DELETE FROM autores WHERE id = ?', [id], function (err) {
-    if (err) return res.status(500).json({ error: err.message });
-    if (this.changes === 0)
-      return res.status(404).json({ error: 'Autor no encontrado' });
-    res.json({ mensaje: 'Autor eliminado correctamente' });
-  });
+const createAutor = async (req, res) => {
+    try {
+        const nuevoAutor = await autoresService.createAutor(req.body);
+        res.status(201).json(nuevoAutor);
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al crear el autor', error });
+    }
+};
+
+const updateAutor = async (req, res) => {
+    try {
+        await autoresService.updateAutor(req.params.id, req.body);
+        res.json({ mensaje: 'Autor actualizado correctamente' });
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al actualizar el autor', error });
+    }
+};
+
+const deleteAutor = async (req, res) => {
+    try {
+        await autoresService.deleteAutor(req.params.id);
+        res.json({ mensaje: 'Autor eliminado correctamente' });
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al eliminar el autor', error });
+    }
+};
+
+module.exports = {
+    getAllAutores,
+    getAutorById,
+    createAutor,
+    updateAutor,
+    deleteAutor
 };
