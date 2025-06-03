@@ -1,3 +1,6 @@
+function formatearFecha(fechaISO) {
+  return fechaISO.split('T')[0]; // Convierte "1914-03-31T00:00:00.000Z" a "1914-03-31"
+}
 // Cargar autores al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
     cargarAutores();
@@ -89,9 +92,9 @@ document.getElementById('formAutor').addEventListener('submit', function (e) {
           fila.innerHTML = `
             <td>${autor.nombre}</td>
             <td>${autor.nacionalidad}</td>
-            <td>${autor.fecha_nacimiento}</td>
+            <td>${formatearFecha(autor.fecha_nacimiento)}</td>
             <td>
-                <button class="btn btn-sm btn-warning" onclick='editarAutor(${autor.id}, ${JSON.stringify(autor.nombre)}, ${JSON.stringify(autor.nacionalidad)}, ${JSON.stringify(autor.fecha_nacimiento)})'>Editar</button>
+                <button class="btn btn-sm btn-warning" onclick='editarAutor(${autor.id}, ${JSON.stringify(autor.nombre)}, ${JSON.stringify(autor.nacionalidad)}, "${formatearFecha(autor.fecha_nacimiento)}")'>Editar</button>
                 <button class="btn btn-sm btn-danger" onclick="eliminarAutor(${autor.id})">Eliminar</button>
             </td>
         `;
