@@ -1,0 +1,16 @@
+version: "3.4"
+name: libreria
+services:
+  db:
+    image: mariadb:11.3.2
+    container_name: libreria-db-dev
+    environment:
+      MYSQL_USER: 'AFERNANDEZ'
+      MYSQL_PASSWORD: '26011998'
+      MYSQL_PORT: 3306
+      MYSQL_ROOT_PASSWORD: '26011998'
+      MYSQL_DATABASE: 'libreria'
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
