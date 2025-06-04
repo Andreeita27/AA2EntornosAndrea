@@ -1,20 +1,19 @@
 const mysql = require('mysql2/promise');
+const { config } = require('../config/configuration');
 
 const dbConfig = {
-  host: 'localhost',
-  user: 'AFERNANDEZ',
-  password: '26011998',
-  database: 'libreria',
-  port: 3306
+  host: config.db.host,
+  user: config.db.user,
+  password: config.db.password,
+  database: config.db.database,
+  port: config.db.port
 };
 
 const pool = mysql.createPool(dbConfig);
 
-const initializeDatabase = async () => {
+const inicializarDB = async () => {
   try {
     const connection = await pool.getConnection();
-    
-    console.log('Conectado a base de datos');
     
     await connection.execute(`
       CREATE TABLE IF NOT EXISTS autores (
@@ -36,14 +35,13 @@ const initializeDatabase = async () => {
       )
     `);
     
-    console.log('Tablas creadas correctamente');
     connection.release();
-    
+    console.log('Base de datos inicializada correctamente');
   } catch (error) {
-    console.error('Error al inicializar la base de datos:', error.message);
+    console.error('Error al inicializar la base de datos:', error);
   }
 };
 
-initializeDatabase();
+inicializarDB();
 
 module.exports = pool;
