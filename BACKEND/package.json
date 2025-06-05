@@ -9,7 +9,10 @@
     "integration-test": "mocha src/test/integration --exit",
     "test": "npm run unit-test && npm run integration-test",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "docker:start": "docker-compose -f docker-compose.dev.yml up -d",
+    "docker:stop": "docker-compose -f docker-compose.dev.yml down",
+    "docker:test": "docker-compose -f docker-compose.dev.yml down && docker-compose -f docker-compose.dev.yml up -d && npm test"
   },
   "jest": {
     "testEnvironment": "node"
