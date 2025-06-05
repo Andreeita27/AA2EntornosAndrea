@@ -1,6 +1,6 @@
 db:
   host: localhost
-  port: 3306
+  port: 3307
   user: AFERNANDEZ
   password: "26011998"
   database: libreria
