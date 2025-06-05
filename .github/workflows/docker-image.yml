@@ -1,0 +1,24 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main", "docker" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Backend Docker image
+      working-directory: ./BACKEND
+      run: docker build . --file Dockerfile --tag libreria-backend:$(date +%s)
+
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Frontend Docker image
+      working-directory: ./FRONTEND
+      run: docker build . --file Dockerfile --tag libreria-frontend:$(date +%s)
