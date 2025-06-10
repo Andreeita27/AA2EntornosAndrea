@@ -24,9 +24,15 @@ CREATE TABLE IF NOT EXISTS libros (
 INSERT INTO autores (nombre, nacionalidad, fecha_nacimiento) VALUES
 ('Gabriel García Márquez', 'Colombiana', '1927-03-06'),
 ('Isabel Allende', 'Chilena', '1942-08-02'),
-('Julio Cortázar', 'Argentina', '1914-08-26');
+('Mario Vargas Llosa', 'Peruana', '1936-03-28'),
+('Julio Cortázar', 'Argentina', '1914-08-26'),
+('Octavio Paz', 'Mexicana', '1914-03-31');
 
 INSERT INTO libros (titulo, genero, anio_publicacion, autor_id) VALUES
 ('Cien años de soledad', 'Realismo mágico', 1967, 1),
+('El amor en los tiempos del cólera', 'Romance', 1985, 1),
 ('La casa de los espíritus', 'Realismo mágico', 1982, 2),
-('Rayuela', 'Novela experimental', 1963, 3);
+('Paula', 'Autobiografía', 1994, 2),
+('La ciudad y los perros', 'Drama', 1963, 3),
+('Rayuela', 'Novela experimental', 1963, 4),
+('El laberinto de la soledad', 'Ensayo', 1950, 5);

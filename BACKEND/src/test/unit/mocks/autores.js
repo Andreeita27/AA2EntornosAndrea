@@ -27,14 +27,14 @@ exports.mockAutor = {
 };
 
 exports.mockAutorToCreate = {
-    "nombre": "Nuevo Autor",
+    "nombre": "Nuevo autor",
     "nacionalidad": "Española",
     "fecha_nacimiento": "1980-01-01"
 };
 
 exports.mockCreatedAutor = {
     "id": 4,
-    "nombre": "Nuevo Autor",
+    "nombre": "Nuevo autor",
     "nacionalidad": "Española",
     "fecha_nacimiento": "1980-01-01"
 };
