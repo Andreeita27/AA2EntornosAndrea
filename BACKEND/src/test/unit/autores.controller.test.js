@@ -122,7 +122,7 @@ describe('autores controller', () => {
         expect(response.statusCode).toEqual(201);
         expect(response._isEndCalled()).toBeTruthy();
         expect(response._getJSONData().id).toEqual(4);
-        expect(response._getJSONData().nombre).toEqual('Nuevo Autor');
+        expect(response._getJSONData().nombre).toEqual('Nuevo autor');
     });
 
     it('PUT /api/autores/:id should update an author', async () => {

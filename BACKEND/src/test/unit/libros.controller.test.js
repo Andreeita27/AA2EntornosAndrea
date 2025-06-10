@@ -116,7 +116,7 @@ describe('libros controller', () => {
         expect(response.statusCode).toEqual(201);
         expect(response._isEndCalled()).toBeTruthy();
         expect(response._getJSONData().id).toEqual(4);
-        expect(response._getJSONData().titulo).toEqual('Nuevo Libro');
+        expect(response._getJSONData().titulo).toEqual('Nuevo libro');
     });
 
     it('PUT /api/libros/:id should update a book', async () => {

@@ -35,7 +35,7 @@ exports.mockLibro = {
 };
 
 exports.mockLibroToCreate = {
-    "titulo": "Nuevo Libro",
+    "titulo": "Nuevo libro",
     "genero": "Novela",
     "anio_publicacion": 2024,
     "autor_id": 1
@@ -43,7 +43,7 @@ exports.mockLibroToCreate = {
 
 exports.mockCreatedLibro = {
     "id": 4,
-    "titulo": "Nuevo Libro",
+    "titulo": "Nuevo libro",
     "genero": "Novela",
     "anio_publicacion": 2024,
     "autor_id": 1

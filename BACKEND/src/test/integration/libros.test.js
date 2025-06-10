@@ -58,7 +58,7 @@ describe('libros', () => {
             chai.request(app)
                 .post('/api/libros')
                 .send({
-                    titulo: 'Libro de Prueba',
+                    titulo: 'Libro de prueba',
                     genero: 'Ficción',
                     anio_publicacion: 2024,
                     autor_id: 1
@@ -70,7 +70,7 @@ describe('libros', () => {
                     expect(response.body).to.have.property('genero');
                     expect(response.body).to.have.property('anio_publicacion');
                     expect(response.body).to.have.property('autor_id');
-                    expect(response.body.titulo).to.equal('Libro de Prueba');
+                    expect(response.body.titulo).to.equal('Libro de prueba');
                     done();
                 });
         });
@@ -94,7 +94,7 @@ describe('libros', () => {
             chai.request(app)
                 .post('/api/libros')
                 .send({
-                    titulo: 'Libro Test',
+                    titulo: 'Libro test',
                     genero: 'Ficción',
                     anio_publicacion: 'no-es-numero',
                     autor_id: 1
@@ -112,7 +112,7 @@ describe('libros', () => {
             chai.request(app)
                 .put('/api/libros/1')
                 .send({
-                    titulo: 'Libro Actualizado',
+                    titulo: 'Libro actualizado',
                     genero: 'Drama',
                     anio_publicacion: 2025,
                     autor_id: 2
@@ -145,7 +145,7 @@ describe('libros', () => {
             chai.request(app)
                 .post('/api/libros')
                 .send({
-                    titulo: 'Libro Para Eliminar',
+                    titulo: 'Libro Para eliminar',
                     genero: 'Temporal',
                     anio_publicacion: 2024,
                     autor_id: 1

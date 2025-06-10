@@ -56,7 +56,7 @@ describe('autores', () => {
             chai.request(app)
                 .post('/api/autores')
                 .send({
-                    nombre: 'Autor de Prueba',
+                    nombre: 'Autor de prueba',
                     nacionalidad: 'Española',
                     fecha_nacimiento: '1980-01-01'
                 })
@@ -66,7 +66,7 @@ describe('autores', () => {
                     expect(response.body).to.have.property('nombre');
                     expect(response.body).to.have.property('nacionalidad');
                     expect(response.body).to.have.property('fecha_nacimiento');
-                    expect(response.body.nombre).to.equal('Autor de Prueba');
+                    expect(response.body.nombre).to.equal('Autor de prueba');
                     done();
                 });
         });
@@ -89,7 +89,7 @@ describe('autores', () => {
             chai.request(app)
                 .post('/api/autores')
                 .send({
-                    nombre: 'Autor Test',
+                    nombre: 'Autor test',
                     nacionalidad: 'Española',
                     fecha_nacimiento: 'fecha-invalida'
                 })
@@ -106,7 +106,7 @@ describe('autores', () => {
             chai.request(app)
                 .put('/api/autores/1')
                 .send({
-                    nombre: 'Autor Actualizado',
+                    nombre: 'Autor actualizado',
                     nacionalidad: 'Francesa',
                     fecha_nacimiento: '1975-05-15'
                 })
@@ -138,7 +138,7 @@ describe('autores', () => {
             chai.request(app)
                 .post('/api/autores')
                 .send({
-                    nombre: 'Autor Para Eliminar',
+                    nombre: 'Autor Para eliminar',
                     nacionalidad: 'Temporal',
                     fecha_nacimiento: '1990-01-01'
                 })
