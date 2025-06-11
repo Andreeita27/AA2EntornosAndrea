@@ -11,7 +11,7 @@ const getAutorById = async (id) => {
 };
 
 const createAutor = async (autor) => {
-    const { nombre, nacionalidad, fecha_nacimiento } = autor; // ¡Faltaba fecha_nacimiento!
+    const { nombre, nacionalidad, fecha_nacimiento } = autor;
     const [result] = await db.query(
         'INSERT INTO autores (nombre, nacionalidad, fecha_nacimiento) VALUES (?, ?, ?)', 
         [nombre, nacionalidad, fecha_nacimiento]
@@ -20,7 +20,7 @@ const createAutor = async (autor) => {
 };
 
 const updateAutor = async (id, autor) => {
-    const { nombre, nacionalidad, fecha_nacimiento } = autor; // ¡Faltaba fecha_nacimiento!
+    const { nombre, nacionalidad, fecha_nacimiento } = autor;
     await db.query(
         'UPDATE autores SET nombre = ?, nacionalidad = ?, fecha_nacimiento = ? WHERE id = ?', 
         [nombre, nacionalidad, fecha_nacimiento, id]

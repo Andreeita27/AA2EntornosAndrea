@@ -32,7 +32,7 @@ const getLibroById = async (id) => {
 };
 
 const createLibro = async (libro) => {
-    const { titulo, genero, anio_publicacion, autor_id } = libro; // ¡Faltaba anio_publicacion!
+    const { titulo, genero, anio_publicacion, autor_id } = libro;
     const [result] = await db.query(
         'INSERT INTO libros (titulo, genero, anio_publicacion, autor_id) VALUES (?, ?, ?, ?)', 
         [titulo, genero, anio_publicacion, autor_id]
@@ -41,7 +41,7 @@ const createLibro = async (libro) => {
 };
 
 const updateLibro = async (id, libro) => {
-    const { titulo, genero, anio_publicacion, autor_id } = libro; // ¡Faltaba anio_publicacion!
+    const { titulo, genero, anio_publicacion, autor_id } = libro;
     await db.query(
         'UPDATE libros SET titulo = ?, genero = ?, anio_publicacion = ?, autor_id = ? WHERE id = ?', 
         [titulo, genero, anio_publicacion, autor_id, id]
